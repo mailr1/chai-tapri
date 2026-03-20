@@ -563,38 +563,19 @@ textarea::placeholder { color: rgba(255,237,213,0.22); font-weight:400; font-sty
 
 .share-block {
   margin: 0 20px 24px;
-  background: rgba(255,255,255,0.03);
-  border: 1px dashed rgba(249,115,22,0.20);
-  border-radius: 16px;
-  padding: 16px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0 0 8px;
   display: none;
-  backdrop-filter: blur(8px);
+  backdrop-filter: none;
 }
 
 .share-block.show { display:block; }
 
-.share-title {
-  font-family: 'Baloo 2', cursive;
-  font-size: 13px;
-  font-weight: 800;
-  color: rgba(255,237,213,0.36);
-  margin-bottom: 10px;
-  text-align: center;
-}
+.share-title { display: none; }
 
-.share-text {
-  background: rgba(0,0,0,0.32);
-  border: 1px solid rgba(255,255,255,0.055);
-  border-radius: 10px;
-  padding: 12px;
-  font-size: 12px;
-  font-weight: 600;
-  color: rgba(255,247,237,0.58);
-  line-height: 1.7;
-  margin-bottom: 10px;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
+.share-text { display: none; }
 
 .share-copy-btn {
   display: block;
