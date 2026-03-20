@@ -6,40 +6,63 @@ const url = require('url');
 
 const PORT = process.env.PORT || 3000;
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const COUNTER_FILE = path.join('/tmp', 'verdict_count.txt');
+
+function getCount() {
+  try {
+    return parseInt(fs.readFileSync(COUNTER_FILE, 'utf8')) || 4812;
+  } catch(e) {
+    return 4812;
+  }
+}
+
+function incrementCount() {
+  var n = getCount() + 1;
+  try { fs.writeFileSync(COUNTER_FILE, String(n)); } catch(e) {}
+  return n;
+}
+
+const personaPrompts = {
+  bhuvan: 'You are Brutal Bhuvan - a late-20s wheatish Indian man, disheveled hair, business casual. Brutally honest, no-nonsense, speaks Hinglish. Never sugarcoats. Use words like bhai, yaar, chhod do yaar, seedha baat karo naturally. Short punchy sentences. Max 2-3 sentences per section.',
+  chitra: 'You are Chill Chitra - early-20s Indian woman, level-headed, calm, formal English. Always shows a path FORWARD. Reassuring but practical. Never dwells on the problem. Max 2-3 sentences per section.',
+  sanket: 'You are Sensible Senior Sanket - mid-30s Indian man, 10 years in the organisation. Wise, warm, grounded mentor. Mix of formal and conversational English. Max 2-3 sentences per section.'
+};
+
+const scenarioContext = {
+  quit: 'The person is asking whether they should quit their current job.',
+  confused: 'The person is confused about their career direction overall.',
+  underpaid: 'The person wants to know if they are being underpaid in their current role.',
+  ownbiz: 'The person is considering leaving their job to start their own business or venture.'
+};
 
 const server = http.createServer(function(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === 'OPTIONS') {
-    res.writeHead(204);
-    res.end();
-    return;
-  }
+  if (req.method === 'OPTIONS') { res.writeHead(204); res.end(); return; }
 
   var parsedUrl = url.parse(req.url);
 
-  // Serve the main HTML file
   if (req.method === 'GET' && (parsedUrl.pathname === '/' || parsedUrl.pathname === '/index.html')) {
-    var filePath = path.join(__dirname, 'index.html');
-    fs.readFile(filePath, function(err, data) {
-      if (err) {
-        res.writeHead(500);
-        res.end('Error loading page');
-        return;
-      }
-      res.writeHead(200, { 'Content-Type': 'text/html' });
+    fs.readFile(path.join(__dirname, 'index.html'), function(err, data) {
+      if (err) { res.writeHead(500); res.end('Error'); return; }
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
       res.end(data);
     });
     return;
   }
 
-  // API proxy endpoint
+  if (req.method === 'GET' && parsedUrl.pathname === '/api/count') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ count: getCount() }));
+    return;
+  }
+
   if (req.method === 'POST' && parsedUrl.pathname === '/api/verdict') {
     if (!ANTHROPIC_API_KEY) {
       res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'ANTHROPIC_API_KEY not set on server' }));
+      res.end(JSON.stringify({ error: 'ANTHROPIC_API_KEY not configured' }));
       return;
     }
 
@@ -54,20 +77,15 @@ const server = http.createServer(function(req, res) {
       }
 
       var persona = parsed.persona;
-      var query = parsed.query;
+      var scenario = parsed.scenario || 'quit';
       var q1 = (parsed.q1 || []).join(', ');
       var q2 = (parsed.q2 || []).join(', ');
       var q3 = (parsed.q3 || []).join(', ');
       var freetext = parsed.freetext;
 
-      var personaPrompts = {
-        bhuvan: 'You are Brutal Bhuvan - a late-20s wheatish Indian man, disheveled hair, business casual. Brutally honest, no-nonsense, speaks Hinglish. Never sugarcoats. Use words like bhai, yaar, chhod do yaar, seedha baat karo naturally. Short punchy sentences. Max 2-3 sentences per section.',
-        chitra: 'You are Chill Chitra - early-20s Indian woman, level-headed, calm, formal English. Always shows a path FORWARD. Reassuring but practical. Never dwells on the problem. Max 2-3 sentences per section.',
-        sanket: 'You are Sensible Senior Sanket - mid-30s Indian man, 10 years in the organisation. Wise, warm, grounded mentor. Mix of formal and conversational English. Max 2-3 sentences per section.'
-      };
-
-      var userContext = 'User query: ' + query + '\nTime in job: ' + q1 + '\nFrustrations: ' + q2 + '\nSwitching status: ' + q3 + '\nIn their own words: ' + freetext;
-      var prompt = personaPrompts[persona] + '\n\nHere is the situation:\n' + userContext + '\n\nRespond ONLY with a raw JSON object, no markdown, no backticks:\n{"verdict":"one strong sentence","reason":"2-3 sentences","next_step":"1-2 sentences"}';
+      var context = scenarioContext[scenario] || scenarioContext.quit;
+      var userContext = 'Scenario: ' + context + '\nTime in job: ' + q1 + '\nFrustrations: ' + q2 + '\nSwitching/action status: ' + q3 + '\nIn their own words: ' + freetext;
+      var prompt = personaPrompts[persona] + '\n\nHere is the situation of the person you are advising:\n' + userContext + '\n\nGive your verdict in your character voice. Respond ONLY with a raw JSON object, no markdown, no backticks:\n{"verdict":"one punchy verdict sentence","reason":"2-3 sentences of your reasoning in character","next_step":"1-2 sentences of a concrete action they can take this week"}';
 
       var postData = JSON.stringify({
         model: 'claude-haiku-4-5',
@@ -101,6 +119,7 @@ const server = http.createServer(function(req, res) {
             var raw = data.content.map(function(i) { return i.text || ''; }).join('').trim();
             var clean = raw.replace(/^```json|^```|```$/gm, '').trim();
             var result = JSON.parse(clean);
+            result.count = incrementCount();
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify(result));
           } catch(e) {
@@ -121,10 +140,9 @@ const server = http.createServer(function(req, res) {
     return;
   }
 
-  res.writeHead(404);
-  res.end('Not found');
+  res.writeHead(404); res.end('Not found');
 });
 
 server.listen(PORT, function() {
-  console.log('Chai Tapri server running on port ' + PORT);
+  console.log('Chai Tapri v2 running on port ' + PORT);
 });
