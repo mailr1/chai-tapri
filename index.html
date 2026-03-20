@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chai Tapri ☕ — Career Advice, Desi Style</title>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Tiro+Devanagari+Hindi&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Chai Tapri ☕ — Bol Daal</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
   --saffron: #E8651A;
@@ -18,1001 +18,886 @@
   --ink-mid: #5C3317;
   --ink-soft: #9B6B45;
   --cream: #FDF8F0;
-  --cream-dark: #F5EDD8;
+  --cream-dark: #F0E4CC;
   --paper: #FFFCF5;
-  --red: #C0392B;
   --border: #D4A96A;
+  --red: #C0392B;
+  --bhuvan-bg: #FFF5F0;
+  --bhuvan-border: #E8651A;
+  --chitra-bg: #F0FFF8;
+  --chitra-border: #2D7A4F;
+  --sanket-bg: #FFFBF0;
+  --sanket-border: #F0A500;
+  --bubble-user: #1A0A00;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: 'Nunito', sans-serif;
-  background-color: var(--cream);
+  background: var(--cream);
   background-image:
-    radial-gradient(ellipse at 10% 0%, rgba(232,101,26,0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 90% 100%, rgba(240,165,0,0.10) 0%, transparent 50%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='1.5' fill='%23D4A96A' fill-opacity='0.18'/%3E%3Ccircle cx='0' cy='0' r='1.5' fill='%23D4A96A' fill-opacity='0.18'/%3E%3Ccircle cx='80' cy='0' r='1.5' fill='%23D4A96A' fill-opacity='0.18'/%3E%3Ccircle cx='0' cy='80' r='1.5' fill='%23D4A96A' fill-opacity='0.18'/%3E%3Ccircle cx='80' cy='80' r='1.5' fill='%23D4A96A' fill-opacity='0.18'/%3E%3C/svg%3E");
+    radial-gradient(ellipse at 5% 0%, rgba(232,101,26,0.10) 0%, transparent 45%),
+    radial-gradient(ellipse at 95% 100%, rgba(240,165,0,0.08) 0%, transparent 45%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='1.2' fill='%23D4A96A' fill-opacity='0.15'/%3E%3Ccircle cx='0' cy='0' r='1.2' fill='%23D4A96A' fill-opacity='0.15'/%3E%3Ccircle cx='80' cy='80' r='1.2' fill='%23D4A96A' fill-opacity='0.15'/%3E%3C/svg%3E");
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding: 24px 16px 48px;
+  padding: 20px 16px 60px;
 }
 
-/* ---- HEADER ---- */
-.site-header {
+/* ── HEADER ── */
+.header {
   width: 100%;
-  max-width: 640px;
+  max-width: 620px;
   text-align: center;
-  margin-bottom: 28px;
-  position: relative;
+  margin-bottom: 20px;
 }
 
-.site-header::before {
-  content: '';
-  display: block;
-  width: 100%;
-  height: 6px;
+.header-stripe {
+  height: 5px;
   background: repeating-linear-gradient(90deg,
-    var(--saffron) 0, var(--saffron) 20px,
-    var(--turmeric) 20px, var(--turmeric) 40px,
-    var(--green) 40px, var(--green) 60px,
-    var(--turmeric) 60px, var(--turmeric) 80px
+    var(--saffron) 0,var(--saffron) 18px,
+    var(--turmeric) 18px,var(--turmeric) 36px,
+    var(--green) 36px,var(--green) 54px,
+    var(--turmeric) 54px,var(--turmeric) 72px
   );
   border-radius: 3px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .logo-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin-bottom: 6px;
+  gap: 10px;
+  margin-bottom: 4px;
 }
 
 .logo-cup {
-  font-size: 44px;
-  line-height: 1;
-  filter: drop-shadow(2px 3px 0 rgba(184,77,16,0.3));
-  animation: steam 3s ease-in-out infinite;
+  font-size: 40px;
+  animation: sway 3s ease-in-out infinite;
+  display: inline-block;
+  filter: drop-shadow(2px 3px 0 rgba(184,77,16,0.25));
 }
 
-@keyframes steam {
-  0%, 100% { transform: translateY(0) rotate(-2deg); }
-  50% { transform: translateY(-4px) rotate(2deg); }
+@keyframes sway {
+  0%,100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg) translateY(-3px); }
 }
 
-.logo-text {
+.logo-title {
   font-family: 'Baloo 2', cursive;
-  font-size: 38px;
+  font-size: 36px;
   font-weight: 800;
   color: var(--saffron-dark);
-  letter-spacing: -1px;
-  line-height: 1;
-  text-shadow: 3px 3px 0 rgba(184,77,16,0.15);
+  letter-spacing: -0.5px;
+  text-shadow: 2px 2px 0 rgba(184,77,16,0.12);
 }
 
-.logo-sub {
-  font-size: 13px;
+.logo-tagline {
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--ink-soft);
+  margin-bottom: 10px;
 }
 
-.counter-badge {
+.counter {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 12px;
   background: var(--ink);
   color: var(--turmeric);
   font-family: 'Baloo 2', cursive;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
-  padding: 5px 14px;
+  padding: 4px 14px;
   border-radius: 20px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
-.counter-badge .dot {
-  width: 7px; height: 7px;
+.counter-dot {
+  width: 6px; height: 6px;
   border-radius: 50%;
   background: var(--turmeric);
-  animation: pulse 1.5s infinite;
+  animation: blink 1.8s infinite;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.7); }
-}
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
 
-/* ---- CARD ---- */
+/* ── CARD ── */
 .card {
   width: 100%;
-  max-width: 580px;
+  max-width: 620px;
   background: var(--paper);
   border-radius: 20px;
-  padding: 36px 32px;
-  position: relative;
   border: 2px solid var(--border);
-  box-shadow:
-    5px 5px 0 var(--saffron-dark),
-    0 12px 40px rgba(90,40,10,0.12);
+  box-shadow: 5px 5px 0 var(--saffron-dark), 0 16px 48px rgba(90,40,10,0.10);
+  overflow: hidden;
 }
 
-/* Decorative corner doodles */
-.card::before {
-  content: '✦';
-  position: absolute;
-  top: 12px; left: 16px;
-  font-size: 16px;
-  color: var(--turmeric);
-  opacity: 0.6;
-}
-.card::after {
-  content: '✦';
-  position: absolute;
-  bottom: 12px; right: 16px;
-  font-size: 16px;
-  color: var(--saffron);
-  opacity: 0.6;
-}
-
-/* ---- STEPPER ---- */
-.stepper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  margin-bottom: 28px;
-}
-.step-dot {
-  width: 9px; height: 9px;
-  border-radius: 50%;
-  background: var(--cream-dark);
-  border: 1.5px solid var(--border);
-  transition: all 0.3s;
-}
-.step-dot.done { background: var(--turmeric); border-color: var(--turmeric); }
-.step-dot.active { background: var(--saffron); border-color: var(--saffron-dark); transform: scale(1.5); }
-
-/* ---- SCREENS ---- */
+/* ── SCREEN SYSTEM ── */
 .screen { display: none; }
-.screen.active { display: block; animation: fadeUp 0.3s ease; }
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.screen.active { display: block; }
+
+/* ── SCREEN 0: RANT ── */
+.rant-screen {
+  padding: 32px 28px 28px;
 }
 
-/* ---- SCENARIO SCREEN ---- */
-.welcome-eyebrow {
-  font-size: 12px;
+.rant-eyebrow {
+  font-size: 11px;
   font-weight: 800;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--saffron);
   text-align: center;
-  margin-bottom: 10px;
-}
-
-.welcome-title {
-  font-family: 'Baloo 2', cursive;
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--ink);
-  line-height: 1.25;
-  text-align: center;
   margin-bottom: 8px;
 }
 
-.welcome-sub {
-  font-size: 14px;
-  color: var(--ink-soft);
-  text-align: center;
-  margin-bottom: 28px;
-  line-height: 1.6;
-}
-
-.scenario-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.scenario-btn {
-  background: var(--paper);
-  border: 2px solid var(--border);
-  border-radius: 16px;
-  padding: 18px 14px;
-  cursor: pointer;
-  text-align: left;
-  transition: all 0.18s;
-  box-shadow: 3px 3px 0 var(--cream-dark);
-  position: relative;
-  overflow: hidden;
-}
-
-.scenario-btn::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 4px;
-  background: var(--saffron);
-  transform: scaleX(0);
-  transition: transform 0.2s;
-  transform-origin: left;
-}
-
-.scenario-btn:hover::before { transform: scaleX(1); }
-.scenario-btn:hover {
-  border-color: var(--saffron);
-  background: var(--saffron-light);
-  transform: translateY(-2px);
-  box-shadow: 3px 5px 0 rgba(184,77,16,0.2);
-}
-
-.scenario-icon { font-size: 28px; margin-bottom: 8px; display: block; }
-.scenario-label {
+.rant-title {
   font-family: 'Baloo 2', cursive;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.3;
-}
-.scenario-hint {
-  font-size: 12px;
-  color: var(--ink-soft);
-  margin-top: 3px;
-  line-height: 1.4;
-}
-
-/* ---- PERSONA SCREEN ---- */
-.section-title {
-  font-family: 'Baloo 2', cursive;
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 800;
   color: var(--ink);
   text-align: center;
+  line-height: 1.2;
   margin-bottom: 6px;
 }
 
-.section-sub {
-  font-size: 13px;
+.rant-sub {
+  font-size: 14px;
   color: var(--ink-soft);
   text-align: center;
   margin-bottom: 24px;
+  line-height: 1.6;
 }
 
-.persona-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 8px;
-}
-
-.persona-card {
-  border: 2px solid var(--border);
-  border-radius: 18px;
-  padding: 18px 10px 14px;
-  text-align: center;
-  cursor: pointer;
-  background: var(--paper);
-  transition: all 0.18s;
-  box-shadow: 3px 3px 0 var(--cream-dark);
-}
-
-.persona-card:hover {
-  border-color: var(--saffron);
-  background: var(--saffron-light);
-  transform: translateY(-3px);
-  box-shadow: 3px 6px 0 rgba(184,77,16,0.2);
-}
-
-.persona-card.selected {
-  border-color: var(--saffron-dark);
-  background: var(--saffron-light);
-  box-shadow: 3px 5px 0 var(--saffron-dark);
-}
-
-.persona-avatar {
-  width: 70px; height: 70px;
-  border-radius: 50%;
-  margin: 0 auto 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 34px;
-  border: 3px solid var(--border);
-  background: var(--cream-dark);
-  transition: border-color 0.18s;
-  position: relative;
-}
-
-.persona-card.selected .persona-avatar,
-.persona-card:hover .persona-avatar { border-color: var(--saffron); }
-
-.persona-name {
-  font-family: 'Baloo 2', cursive;
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--ink);
-  line-height: 1.2;
-  margin-bottom: 3px;
-}
-
-.persona-vibe {
-  font-size: 11px;
-  color: var(--ink-soft);
-  line-height: 1.3;
-  font-style: italic;
-}
-
-/* ---- QUESTIONS SCREEN ---- */
-.q-block { margin-bottom: 24px; }
-
-.q-label {
+/* Scenario pills */
+.scenario-pills {
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.q-num {
-  min-width: 24px; height: 24px;
-  border-radius: 50%;
-  background: var(--saffron);
-  color: white;
-  font-weight: 800;
-  font-size: 12px;
-  display: flex; align-items: center; justify-content: center;
-  margin-top: 1px;
-  box-shadow: 1px 1px 0 var(--saffron-dark);
-}
-
-.q-text {
-  font-family: 'Baloo 2', cursive;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.4;
-}
-
-.checkbox-group { display: flex; flex-direction: column; gap: 7px; }
-
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--ink);
-  background: var(--paper);
-  transition: all 0.15s;
-  line-height: 1.3;
-}
-
-.checkbox-label:hover { background: var(--saffron-light); border-color: var(--saffron); }
-.checkbox-label.checked {
-  background: var(--saffron-light);
-  border-color: var(--saffron-dark);
-  color: var(--saffron-dark);
-}
-.checkbox-label input { accent-color: var(--saffron); width: 16px; height: 16px; flex-shrink: 0; }
-
-/* ---- FREE TEXT SCREEN ---- */
-.freetext-persona-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--ink);
-  border-radius: 14px;
-  padding: 10px 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
-.freetext-persona-avatar { font-size: 28px; }
-
-.freetext-persona-info { flex: 1; }
-.freetext-persona-name {
-  font-family: 'Baloo 2', cursive;
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--turmeric);
-}
-.freetext-persona-listening {
-  font-size: 11px;
-  color: rgba(255,255,255,0.6);
-}
-
-.freetext-q {
-  font-family: 'Baloo 2', cursive;
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--ink);
-  margin-bottom: 6px;
-  line-height: 1.3;
-}
-
-.freetext-hint {
+.pill {
+  background: var(--paper);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 7px 14px;
   font-size: 13px;
-  color: var(--ink-soft);
-  margin-bottom: 14px;
-  line-height: 1.5;
+  font-weight: 700;
+  color: var(--ink-mid);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.pill:hover { background: var(--saffron-light); border-color: var(--saffron); color: var(--saffron-dark); }
+.pill.active { background: var(--saffron); border-color: var(--saffron-dark); color: white; }
+
+/* Rant box */
+.rant-box-wrap {
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.rant-box-label {
+  font-family: 'Baloo 2', cursive;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
 }
 
 textarea {
   width: 100%;
+  min-height: 130px;
   padding: 14px 16px;
   border: 2px solid var(--border);
-  border-radius: 14px;
+  border-radius: 16px;
   font-family: 'Nunito', sans-serif;
   font-size: 15px;
   font-weight: 600;
   color: var(--ink);
   background: var(--paper);
   resize: vertical;
-  min-height: 120px;
   outline: none;
-  transition: border-color 0.15s;
-  line-height: 1.6;
+  line-height: 1.65;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
-textarea:focus { border-color: var(--saffron); box-shadow: 0 0 0 3px rgba(232,101,26,0.1); }
-textarea::placeholder { color: var(--ink-soft); font-weight: 400; }
-
-/* ---- VERDICT SCREEN ---- */
-.loading-wrap {
-  padding: 40px 20px;
-  text-align: center;
+textarea:focus {
+  border-color: var(--saffron);
+  box-shadow: 0 0 0 3px rgba(232,101,26,0.1);
 }
 
-.chai-loader {
-  font-size: 48px;
-  animation: wobble 0.8s ease-in-out infinite alternate;
-  display: block;
-  margin-bottom: 16px;
-}
+textarea::placeholder { color: var(--ink-soft); font-weight: 400; font-style: italic; }
 
-@keyframes wobble {
-  from { transform: rotate(-8deg) scale(0.95); }
-  to { transform: rotate(8deg) scale(1.05); }
-}
-
-.loading-text {
-  font-family: 'Baloo 2', cursive;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--ink-mid);
-}
-
-.verdict-wrap { display: none; }
-
-.verdict-persona-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  background: var(--ink);
-  border-radius: 16px 16px 0 0;
-  padding: 16px 20px;
-  margin: -36px -32px 0;
-}
-
-.verdict-avatar { font-size: 40px; }
-
-.verdict-persona-name {
-  font-family: 'Baloo 2', cursive;
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--turmeric);
-}
-
-.verdict-persona-tagline {
-  font-size: 12px;
-  color: rgba(255,255,255,0.55);
-  margin-top: 2px;
-}
-
-.verdict-body { padding-top: 24px; }
-
-.verdict-section {
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 2px dashed var(--cream-dark);
-}
-.verdict-section:last-of-type { border-bottom: none; }
-
-.verdict-section-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.char-count {
   font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--saffron);
-  margin-bottom: 8px;
-}
-
-.verdict-section-label .icon {
-  width: 22px; height: 22px;
-  border-radius: 50%;
-  background: var(--saffron-light);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px;
-}
-
-.verdict-main {
-  font-family: 'Baloo 2', cursive;
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--ink);
-  line-height: 1.35;
-}
-
-.verdict-text {
-  font-size: 15px;
+  color: var(--ink-soft);
+  text-align: right;
+  margin-top: 4px;
   font-weight: 600;
-  color: var(--ink-mid);
-  line-height: 1.7;
 }
 
-.verdict-count-bar {
-  background: var(--turmeric-light);
-  border: 1.5px solid var(--turmeric);
+.error-msg { font-size: 13px; color: var(--red); margin-top: 6px; font-weight: 700; display: none; }
+.error-msg.show { display: block; }
+
+/* Others ranting — static social proof */
+.others-ranting {
+  background: var(--cream-dark);
   border-radius: 12px;
-  padding: 10px 16px;
-  text-align: center;
-  margin-top: 20px;
-  font-family: 'Baloo 2', cursive;
-  font-size: 13px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.others-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+.others-text {
+  font-size: 12px;
   font-weight: 700;
+  color: var(--ink-mid);
+  line-height: 1.5;
+}
+
+.others-text span {
   color: var(--saffron-dark);
 }
 
-/* ---- BUTTONS ---- */
-.primary-btn {
+/* ── CTA BUTTON ── */
+.cta-btn {
   display: block;
   width: 100%;
   padding: 16px 20px;
-  margin-top: 22px;
   background: var(--saffron);
   border: 2px solid var(--saffron-dark);
   border-radius: 14px;
   font-family: 'Baloo 2', cursive;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
   color: white;
   cursor: pointer;
   box-shadow: 3px 4px 0 var(--saffron-dark);
   transition: all 0.15s;
-  letter-spacing: 0.3px;
   text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  letter-spacing: 0.2px;
 }
 
-.primary-btn:hover { background: var(--saffron-dark); transform: translateY(-1px); box-shadow: 3px 5px 0 #7A3008; }
-.primary-btn:active { transform: translateY(2px); box-shadow: 1px 2px 0 var(--saffron-dark); }
-.primary-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.cta-btn:hover { background: var(--saffron-dark); transform: translateY(-1px); box-shadow: 3px 5px 0 #7A3008; }
+.cta-btn:active { transform: translateY(2px); box-shadow: 1px 2px 0 var(--saffron-dark); }
 
-.restart-btn {
-  display: block;
-  width: 100%;
-  padding: 13px 20px;
-  margin-top: 12px;
-  background: transparent;
-  border: 2px dashed var(--border);
-  border-radius: 14px;
-  font-family: 'Baloo 2', cursive;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--ink-soft);
-  cursor: pointer;
-  transition: all 0.15s;
+/* ── SCREEN 1: CHAT ── */
+.chat-screen {
+  display: flex;
+  flex-direction: column;
 }
 
-.restart-btn:hover { border-color: var(--saffron); color: var(--saffron-dark); background: var(--saffron-light); }
-
-.back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background: none;
-  border: none;
-  font-family: 'Nunito', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--ink-soft);
-  cursor: pointer;
-  margin-bottom: 20px;
-  padding: 0;
-  transition: color 0.15s;
-}
-.back-btn:hover { color: var(--saffron); }
-
-.error-msg { font-size: 13px; color: var(--red); margin-top: 8px; display: none; font-weight: 600; }
-.error-msg.show { display: block; }
-
-/* ---- DIVIDER ---- */
-.tapri-divider {
+/* Chat header bar */
+.chat-header {
+  background: var(--ink);
+  padding: 14px 20px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
-  margin: 4px 0 20px;
-  color: var(--border);
-  font-size: 14px;
-}
-.tapri-divider::before, .tapri-divider::after {
-  content: '';
-  flex: 1;
-  height: 1.5px;
-  background: var(--border);
-  border-radius: 1px;
 }
 
+.chat-header-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--turmeric);
+}
+
+.chat-header-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 1px;
+}
+
+.chat-restart {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  color: rgba(255,255,255,0.6);
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.chat-restart:hover { background: rgba(255,255,255,0.1); color: white; }
+
+/* Chat messages area */
+.chat-messages {
+  padding: 20px 20px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 200px;
+}
+
+/* User bubble */
+.msg-user {
+  align-self: flex-end;
+  max-width: 85%;
+  background: var(--bubble-user);
+  color: rgba(255,255,255,0.92);
+  border-radius: 18px 18px 4px 18px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.msg-user-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 5px;
+}
+
+/* Persona message */
+.msg-persona {
+  align-self: flex-start;
+  max-width: 92%;
+  border-radius: 4px 18px 18px 18px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.msg-persona.visible { opacity: 1; transform: translateY(0); }
+
+.msg-persona.bhuvan { background: var(--bhuvan-bg); border-color: var(--bhuvan-border); }
+.msg-persona.chitra { background: var(--chitra-bg); border-color: var(--chitra-border); }
+.msg-persona.sanket { background: var(--sanket-bg); border-color: var(--sanket-border); }
+
+.persona-msg-header {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 14px 8px;
+  border-bottom: 1px dashed rgba(0,0,0,0.08);
+}
+
+.persona-msg-avatar { font-size: 26px; line-height: 1; }
+
+.persona-msg-name {
+  font-family: 'Baloo 2', cursive;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.bhuvan .persona-msg-name { color: var(--saffron-dark); }
+.chitra .persona-msg-name { color: var(--green); }
+.sanket .persona-msg-name { color: #8B6914; }
+
+.persona-msg-vibe {
+  font-size: 11px;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.persona-msg-body { padding: 12px 14px 14px; }
+
+.persona-section { margin-bottom: 12px; }
+.persona-section:last-child { margin-bottom: 0; }
+
+.persona-section-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.bhuvan .persona-section-label { color: var(--saffron); }
+.chitra .persona-section-label { color: var(--green); }
+.sanket .persona-section-label { color: var(--turmeric); }
+
+.persona-section-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+/* Typing indicator */
+.typing-indicator {
+  align-self: flex-start;
+  background: var(--cream-dark);
+  border-radius: 4px 18px 18px 18px;
+  padding: 12px 18px;
+  display: none;
+  align-items: center;
+  gap: 10px;
+  border: 1.5px solid var(--border);
+}
+
+.typing-indicator.show { display: flex; }
+
+.typing-avatar { font-size: 22px; }
+.typing-name {
+  font-family: 'Baloo 2', cursive;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-mid);
+  min-width: 80px;
+}
+
+.typing-dots { display: flex; gap: 4px; }
+.typing-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--ink-soft);
+  animation: typebounce 1.1s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typebounce {
+  0%,100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* Count bar */
+.count-bar {
+  margin: 0 20px 20px;
+  background: var(--turmeric-light);
+  border: 1.5px solid var(--turmeric);
+  border-radius: 12px;
+  padding: 10px 16px;
+  text-align: center;
+  font-family: 'Baloo 2', cursive;
+  font-size: 13px;
+  font-weight: 700;
+  color: #8B6914;
+  display: none;
+}
+
+.count-bar.show { display: block; }
+
+/* Share block */
+.share-block {
+  margin: 0 20px 24px;
+  background: var(--cream-dark);
+  border: 1.5px dashed var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  display: none;
+}
+
+.share-block.show { display: block; }
+
+.share-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink-mid);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.share-text {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.7;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.share-copy-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: var(--ink);
+  border: none;
+  border-radius: 10px;
+  font-family: 'Baloo 2', cursive;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--turmeric);
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.share-copy-btn:hover { opacity: 0.85; }
+
 @media (max-width: 480px) {
-  .card { padding: 28px 18px; }
-  .verdict-persona-header { margin: -28px -18px 0; }
-  .scenario-grid { grid-template-columns: 1fr; }
-  .persona-grid { gap: 8px; }
-  .persona-avatar { width: 58px; height: 58px; font-size: 28px; }
-  .welcome-title { font-size: 23px; }
-  .logo-text { font-size: 30px; }
+  .rant-screen { padding: 24px 18px 20px; }
+  .chat-messages { padding: 16px 14px 24px; }
+  .msg-persona { max-width: 98%; }
+  .count-bar, .share-block { margin: 0 14px 16px; }
+  .rant-title { font-size: 25px; }
 }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="site-header">
+<header class="header">
+  <div class="header-stripe"></div>
   <div class="logo-row">
     <span class="logo-cup">☕</span>
-    <span class="logo-text">Chai Tapri</span>
+    <span class="logo-title">Chai Tapri</span>
   </div>
-  <div class="logo-sub">Career advice, desi style</div>
-  <div class="counter-badge">
-    <span class="dot"></span>
+  <div class="logo-tagline">Career advice, desi style</div>
+  <div class="counter">
+    <span class="counter-dot"></span>
     <span id="counter-text">Loading...</span>
   </div>
 </header>
 
-<!-- MAIN CARD -->
 <div class="card">
 
-  <!-- STEPPER -->
-  <div class="stepper">
-    <div class="step-dot active" id="sd-0"></div>
-    <div class="step-dot" id="sd-1"></div>
-    <div class="step-dot" id="sd-2"></div>
-    <div class="step-dot" id="sd-3"></div>
-    <div class="step-dot" id="sd-4"></div>
-  </div>
-
-  <!-- SCREEN 0: Scenario -->
+  <!-- SCREEN 0: RANT -->
   <div class="screen active" id="screen-0">
-    <div class="welcome-eyebrow">☕ Ek minute ruk</div>
-    <div class="welcome-title">What's on your mind?</div>
-    <div class="welcome-sub">Pick your situation and get brutally honest advice from the tapri crew.</div>
-    <div class="scenario-grid">
-      <button class="scenario-btn" onclick="selectScenario('quit')">
-        <span class="scenario-icon">🚪</span>
-        <div class="scenario-label">Should I quit my job?</div>
-        <div class="scenario-hint">The big exit question</div>
-      </button>
-      <button class="scenario-btn" onclick="selectScenario('confused')">
-        <span class="scenario-icon">🧭</span>
-        <div class="scenario-label">I'm confused about my career</div>
-        <div class="scenario-hint">Lost in the sauce</div>
-      </button>
-      <button class="scenario-btn" onclick="selectScenario('underpaid')">
-        <span class="scenario-icon">💸</span>
-        <div class="scenario-label">Am I being underpaid?</div>
-        <div class="scenario-hint">Let's talk numbers</div>
-      </button>
-      <button class="scenario-btn" onclick="selectScenario('ownbiz')">
-        <span class="scenario-icon">🚀</span>
-        <div class="scenario-label">Should I start my own thing?</div>
-        <div class="scenario-hint">The entrepreneurship itch</div>
-      </button>
+    <div class="rant-screen">
+      <div class="rant-eyebrow">☕ Tapri pe aaja</div>
+      <div class="rant-title">Kya chal raha hai?<br>Bol daal.</div>
+      <div class="rant-sub">No forms. No checkboxes. Just tell us what's going on — Bhuvan, Chitra and Sanket are listening.</div>
+
+      <div class="scenario-pills" id="scenario-pills">
+        <div class="pill" onclick="setPill(this,'quit')">🚪 Quit karna chahta hoon</div>
+        <div class="pill" onclick="setPill(this,'underpaid')">💸 Underpaid hoon kya?</div>
+        <div class="pill" onclick="setPill(this,'confused')">🧭 Confused hoon career se</div>
+        <div class="pill" onclick="setPill(this,'ownbiz')">🚀 Apna kuch shuru karun?</div>
+      </div>
+
+      <div class="rant-box-label">Situation seedha bata —</div>
+      <div class="rant-box-wrap">
+        <textarea id="rant-input" maxlength="800"
+          placeholder="Yaar, 3 saal ho gaye is company mein. Manager ka koi scene nahi, appraisal mein sirf bakwaas milti hai..."></textarea>
+        <div class="char-count"><span id="char-count">0</span>/800</div>
+      </div>
+
+      <p class="error-msg" id="rant-err">Kuch toh likh yaar. Do line bhi chalega.</p>
+
+      <div class="others-ranting">
+        <span class="others-icon">🔥</span>
+        <div class="others-text">
+          <span>Abhi 12 log</span> tapri pe hain — ek banda job chhodne ki soch raha hai, ek ko appraisal pe gussa hai, ek ko nahi pata kya karna hai life mein.
+        </div>
+      </div>
+
+      <button class="cta-btn" onclick="startChat()">Sach sunna hai? ☕</button>
     </div>
   </div>
 
-  <!-- SCREEN 1: Persona -->
+  <!-- SCREEN 1: CHAT -->
   <div class="screen" id="screen-1">
-    <button class="back-btn" onclick="goTo(0)">← Back</button>
-    <div class="section-title">Who's giving the advice?</div>
-    <div class="section-sub">Pick your tapri buddy wisely.</div>
-    <div class="persona-grid">
-      <div class="persona-card" id="pc-bhuvan" onclick="selectPersona('bhuvan')">
-        <div class="persona-avatar">🧔🏽</div>
-        <div class="persona-name">Brutal Bhuvan</div>
-        <div class="persona-vibe">No filter, no sugar</div>
-      </div>
-      <div class="persona-card" id="pc-chitra" onclick="selectPersona('chitra')">
-        <div class="persona-avatar">👩🏽‍💼</div>
-        <div class="persona-name">Chill Chitra</div>
-        <div class="persona-vibe">Calm, clear, forward</div>
-      </div>
-      <div class="persona-card" id="pc-sanket" onclick="selectPersona('sanket')">
-        <div class="persona-avatar">👨🏿‍💼</div>
-        <div class="persona-name">Sensible Sanket</div>
-        <div class="persona-vibe">10 years in, wise</div>
-      </div>
-    </div>
-    <p class="error-msg" id="persona-err">Please pick someone first.</p>
-    <button class="primary-btn" onclick="confirmPersona()">Continue →</button>
-  </div>
+    <div class="chat-screen">
 
-  <!-- SCREEN 2: Questions -->
-  <div class="screen" id="screen-2">
-    <button class="back-btn" onclick="goTo(1)">← Back</button>
-    <div class="section-title">A little context...</div>
-    <div class="tapri-divider">☕</div>
-
-    <div class="q-block">
-      <div class="q-label">
-        <span class="q-num">1</span>
-        <span class="q-text">How long have you been in your current job?</span>
-      </div>
-      <div class="checkbox-group">
-        <label class="checkbox-label"><input type="checkbox" name="q1" value="Less than 6 months"> Less than 6 months</label>
-        <label class="checkbox-label"><input type="checkbox" name="q1" value="6 months to 1 year"> 6 months – 1 year</label>
-        <label class="checkbox-label"><input type="checkbox" name="q1" value="1 to 3 years"> 1–3 years</label>
-        <label class="checkbox-label"><input type="checkbox" name="q1" value="3 to 5 years"> 3–5 years</label>
-        <label class="checkbox-label"><input type="checkbox" name="q1" value="More than 5 years"> 5+ years</label>
-      </div>
-    </div>
-
-    <div class="q-block">
-      <div class="q-label">
-        <span class="q-num">2</span>
-        <span class="q-text">What's frustrating you the most?</span>
-      </div>
-      <div class="checkbox-group">
-        <label class="checkbox-label"><input type="checkbox" name="q2" value="Toxic manager or workplace"> Toxic manager / workplace</label>
-        <label class="checkbox-label"><input type="checkbox" name="q2" value="No growth or learning"> No growth or learning</label>
-        <label class="checkbox-label"><input type="checkbox" name="q2" value="Low salary"> Low salary</label>
-        <label class="checkbox-label"><input type="checkbox" name="q2" value="Work-life balance is gone"> Work-life balance is gone</label>
-        <label class="checkbox-label"><input type="checkbox" name="q2" value="Feeling stuck and bored"> Feeling stuck and bored</label>
-        <label class="checkbox-label"><input type="checkbox" name="q2" value="Nothing specific, just restless"> Nothing specific, just restless</label>
-      </div>
-    </div>
-
-    <div class="q-block">
-      <div class="q-label">
-        <span class="q-num">3</span>
-        <span class="q-text">Have you taken any action yet?</span>
-      </div>
-      <div class="checkbox-group">
-        <label class="checkbox-label"><input type="checkbox" name="q3" value="Yes, actively applying elsewhere"> Yes, actively applying</label>
-        <label class="checkbox-label"><input type="checkbox" name="q3" value="Spoke to recruiters but nothing clicked"> Spoke to recruiters, nothing clicked</label>
-        <label class="checkbox-label"><input type="checkbox" name="q3" value="Thought about it but have not acted"> Thought about it, haven't acted</label>
-        <label class="checkbox-label"><input type="checkbox" name="q3" value="No action yet, too scared or comfortable"> No action — too scared / comfortable</label>
-      </div>
-    </div>
-
-    <p class="error-msg" id="questions-err">Please answer all 3 questions.</p>
-    <button class="primary-btn" onclick="submitQuestions()">Next →</button>
-  </div>
-
-  <!-- SCREEN 3: Free Text -->
-  <div class="screen" id="screen-3">
-    <button class="back-btn" onclick="goTo(2)">← Back</button>
-
-    <div class="freetext-persona-bar" id="ft-persona-bar">
-      <div class="freetext-persona-avatar" id="ft-avatar"></div>
-      <div class="freetext-persona-info">
-        <div class="freetext-persona-name" id="ft-name"></div>
-        <div class="freetext-persona-listening">is listening... go on</div>
-      </div>
-    </div>
-
-    <div class="freetext-q" id="ft-question">In your own words — what's going on?</div>
-    <div class="freetext-hint">No judgement here. Tell us what's actually happening — the full picture. The more honest you are, the better the advice.</div>
-    <textarea id="user-freetext" placeholder="Main yeh soch raha hoon..."></textarea>
-    <p class="error-msg" id="freetext-err">Write something first — even a few words.</p>
-    <button class="primary-btn" onclick="getVerdict()">Get My Verdict ☕</button>
-  </div>
-
-  <!-- SCREEN 4: Verdict -->
-  <div class="screen" id="screen-4">
-    <div class="loading-wrap" id="verdict-loading">
-      <span class="chai-loader">☕</span>
-      <div class="loading-text" id="loading-msg">Brewing your advice...</div>
-    </div>
-
-    <div class="verdict-wrap" id="verdict-content">
-      <div class="verdict-persona-header">
-        <div class="verdict-avatar" id="v-avatar"></div>
+      <div class="chat-header">
         <div>
-          <div class="verdict-persona-name" id="v-name"></div>
-          <div class="verdict-persona-tagline" id="v-tagline"></div>
+          <div class="chat-header-title">☕ Tapri pe chal raha hai...</div>
+          <div class="chat-header-sub">Bhuvan, Chitra aur Sanket bol rahe hain</div>
+        </div>
+        <button class="chat-restart" onclick="restart()">← Naya rant</button>
+      </div>
+
+      <div class="chat-messages" id="chat-messages">
+        <!-- Messages injected by JS -->
+      </div>
+
+      <!-- Typing indicator -->
+      <div class="typing-indicator" id="typing-indicator">
+        <span class="typing-avatar" id="typing-avatar">🧔🏽</span>
+        <span class="typing-name" id="typing-name">Bhuvan</span>
+        <div class="typing-dots">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
         </div>
       </div>
 
-      <div class="verdict-body">
-        <div class="verdict-section">
-          <div class="verdict-section-label"><span class="icon">⚡</span> Verdict</div>
-          <div class="verdict-main" id="v-verdict"></div>
-        </div>
-        <div class="verdict-section">
-          <div class="verdict-section-label"><span class="icon">🧠</span> Reason</div>
-          <div class="verdict-text" id="v-reason"></div>
-        </div>
-        <div class="verdict-section">
-          <div class="verdict-section-label"><span class="icon">👣</span> Next Step</div>
-          <div class="verdict-text" id="v-next"></div>
-        </div>
+      <div class="count-bar" id="count-bar"></div>
 
-        <div class="verdict-count-bar" id="v-count-bar"></div>
+      <div class="share-block" id="share-block">
+        <div class="share-title">📋 Copy your tapri verdict</div>
+        <div class="share-text" id="share-text"></div>
+        <button class="share-copy-btn" onclick="copyShare()">Copy & Share</button>
       </div>
 
-      <button class="restart-btn" onclick="restart()">☕ Start over — try a different scenario</button>
     </div>
   </div>
 
 </div><!-- /card -->
 
 <script>
-var state = { scenario: "", persona: "", q1: [], q2: [], q3: [], freetext: "" };
+var state = { rant: '', scenario: '' };
 
-var personaInfo = {
-  bhuvan: { name: "Brutal Bhuvan", avatar: "🧔🏽", tagline: "Giving it to you straight, bhai" },
-  chitra: { name: "Chill Chitra", avatar: "👩🏽‍💼", tagline: "Calm, clear, forward-looking" },
-  sanket: { name: "Sensible Sanket", avatar: "👨🏿‍💼", tagline: "10 years in — seen it all" }
-};
+var personas = [
+  {
+    key: 'bhuvan',
+    name: 'Brutal Bhuvan',
+    avatar: '🧔🏽',
+    vibe: 'No filter, no mercy',
+    cssClass: 'bhuvan',
+    typingLine: 'Bhuvan chai pee ke aa raha hai…',
+    sections: [
+      { key: 'sun_sach_kya_hai', label: 'Sun, sach kya hai' },
+      { key: 'problem_kya_hai', label: 'Problem kya hai' },
+      { key: 'ab_kya_karega', label: 'Ab kya karega' }
+    ]
+  },
+  {
+    key: 'chitra',
+    name: 'Chill Chitra',
+    avatar: '👩🏽‍💼',
+    vibe: 'Calm, clear, aage dekh',
+    cssClass: 'chitra',
+    typingLine: 'Chitra soch rahi hai calmly…',
+    sections: [
+      { key: 'whats_really_going_on', label: "What's really going on" },
+      { key: 'what_matters_now', label: 'What matters now' },
+      { key: 'next_step', label: 'Next step' }
+    ]
+  },
+  {
+    key: 'sanket',
+    name: 'Sensible Sanket',
+    avatar: '👨🏿‍💼',
+    vibe: '10 saal ka experience bol raha hai',
+    cssClass: 'sanket',
+    typingLine: 'Sanket apna experience nikaal raha hai…',
+    sections: [
+      { key: 'this_pattern_is', label: 'This pattern is' },
+      { key: 'where_this_leads', label: 'Where this leads' },
+      { key: 'what_id_do', label: "What I'd do" }
+    ]
+  }
+];
 
-var scenarioQuestions = {
-  quit: "Should I quit my job?",
-  confused: "What's really going on with my career?",
-  underpaid: "Do you think you're being underpaid?",
-  ownbiz: "Tell me about this business idea — and your fear."
-};
-
-var loadingMessages = {
-  bhuvan: ["Bhuvan is putting down his chai...", "Bhai, seedha baat sun...", "Almost done judging you..."],
-  chitra: ["Chitra is thinking this through...", "Mapping a path forward...", "Almost ready..."],
-  sanket: ["Sanket is drawing on 10 years...", "Consulting his internal compass...", "Wisdom incoming..."]
-};
-
-// Load verdict counter
-fetch("/api/count").then(function(r) { return r.json(); }).then(function(d) {
-  document.getElementById("counter-text").textContent = d.count.toLocaleString("en-IN") + " verdicts delivered";
-}).catch(function() {
-  document.getElementById("counter-text").textContent = "Career advice, no filter";
+// Load counter
+fetch('/api/count').then(function(r){return r.json();}).then(function(d){
+  document.getElementById('counter-text').textContent = d.count.toLocaleString('en-IN') + ' verdicts delivered';
+}).catch(function(){
+  document.getElementById('counter-text').textContent = 'Career advice, no filter';
 });
 
+// Char counter
+document.getElementById('rant-input').addEventListener('input', function() {
+  document.getElementById('char-count').textContent = this.value.length;
+});
+
+// Scenario pills
+function setPill(el, scenario) {
+  document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+  el.classList.add('active');
+  state.scenario = scenario;
+
+  var placeholders = {
+    quit: 'Yaar, 3 saal ho gaye is company mein. Manager ka koi scene nahi, appraisal mein sirf bakwaas milti hai...',
+    underpaid: 'Mujhe lagta hai mujhe mere kaam ke hisaab se salary nahi mil rahi. Market mein log zyada le rahe hain...',
+    confused: 'Samajh nahi aa raha life mein kya karna chahta hoon. Job theek hai but feels hollow somehow...',
+    ownbiz: 'Ek idea hai jo main pursue karna chahta hoon but job chhodne se dar lagta hai...'
+  };
+  document.getElementById('rant-input').placeholder = placeholders[scenario] || '';
+}
+
 function goTo(screen) {
-  document.querySelectorAll(".screen").forEach(function(s) { s.classList.remove("active"); });
-  document.getElementById("screen-" + screen).classList.add("active");
-  for (var i = 0; i <= 4; i++) {
-    var dot = document.getElementById("sd-" + i);
-    dot.classList.remove("active", "done");
-    if (i < screen) dot.classList.add("done");
-    else if (i === screen) dot.classList.add("active");
-  }
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById('screen-' + screen).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function selectScenario(s) {
-  state.scenario = s;
-  goTo(1);
+function showTyping(persona) {
+  var ti = document.getElementById('typing-indicator');
+  document.getElementById('typing-avatar').textContent = persona.avatar;
+  document.getElementById('typing-name').textContent = persona.name + '...';
+  ti.classList.add('show');
+  ti.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-function selectPersona(p) {
-  state.persona = p;
-  document.querySelectorAll(".persona-card").forEach(function(c) { c.classList.remove("selected"); });
-  document.getElementById("pc-" + p).classList.add("selected");
-  document.getElementById("persona-err").classList.remove("show");
-  setTimeout(function() {
-    var pi = personaInfo[p];
-    document.getElementById("ft-avatar").textContent = pi.avatar;
-    document.getElementById("ft-name").textContent = pi.name;
-    document.getElementById("ft-question").textContent = scenarioQuestions[state.scenario] || "In your own words — what's going on?";
-    goTo(2);
-    setupCheckboxes();
-  }, 220);
+function hideTyping() {
+  document.getElementById('typing-indicator').classList.remove('show');
 }
 
-function confirmPersona() {
-  if (!state.persona) { document.getElementById("persona-err").classList.add("show"); return; }
-  var pi = personaInfo[state.persona];
-  document.getElementById("ft-avatar").textContent = pi.avatar;
-  document.getElementById("ft-name").textContent = pi.name;
-  document.getElementById("ft-question").textContent = scenarioQuestions[state.scenario] || "In your own words — what's going on?";
-  goTo(2);
-  setupCheckboxes();
+function addUserBubble(text) {
+  var wrap = document.getElementById('chat-messages');
+  var div = document.createElement('div');
+  div.className = 'msg-user';
+  div.innerHTML = '<div class="msg-user-label">You said</div>' + escHtml(text);
+  wrap.appendChild(div);
 }
 
-function setupCheckboxes() {
-  document.querySelectorAll(".checkbox-label input").forEach(function(cb) {
-    cb.addEventListener("change", function() {
-      this.closest(".checkbox-label").classList.toggle("checked", this.checked);
+function addPersonaMessage(persona, data) {
+  var wrap = document.getElementById('chat-messages');
+  var div = document.createElement('div');
+  div.className = 'msg-persona ' + persona.cssClass;
+
+  var sectionsHtml = '';
+  persona.sections.forEach(function(s) {
+    var val = data[s.key];
+    if (val) {
+      sectionsHtml += '<div class="persona-section">' +
+        '<div class="persona-section-label">' + escHtml(s.label) + '</div>' +
+        '<div class="persona-section-text">' + escHtml(val) + '</div>' +
+        '</div>';
+    }
+  });
+
+  div.innerHTML =
+    '<div class="persona-msg-header">' +
+      '<span class="persona-msg-avatar">' + persona.avatar + '</span>' +
+      '<div>' +
+        '<div class="persona-msg-name">' + persona.name + '</div>' +
+        '<div class="persona-msg-vibe">' + persona.vibe + '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="persona-msg-body">' + sectionsHtml + '</div>';
+
+  wrap.appendChild(div);
+
+  // Animate in after a tick
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      div.classList.add('visible');
+      div.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
+  });
+
+  return div;
+}
+
+function buildShareText(rant, results) {
+  var lines = ['☕ Chai Tapri — Mera Verdict\n'];
+  lines.push('Meri situation: ' + rant.substring(0, 120) + (rant.length > 120 ? '...' : '') + '\n');
+
+  personas.forEach(function(p) {
+    var data = results[p.key];
+    if (!data) return;
+    lines.push('— ' + p.name + ' —');
+    p.sections.forEach(function(s) {
+      if (data[s.key]) lines.push(s.label + ': ' + data[s.key]);
+    });
+    lines.push('');
+  });
+
+  lines.push('Try it: chaitapri.in');
+  return lines.join('\n');
+}
+
+function escHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function startChat() {
+  var rant = document.getElementById('rant-input').value.trim();
+  if (rant.length < 10) {
+    document.getElementById('rant-err').classList.add('show');
+    return;
+  }
+  document.getElementById('rant-err').classList.remove('show');
+  state.rant = rant;
+
+  // Switch to chat screen
+  goTo(1);
+
+  // Clear messages
+  document.getElementById('chat-messages').innerHTML = '';
+  document.getElementById('count-bar').classList.remove('show');
+  document.getElementById('share-block').classList.remove('show');
+
+  // Add user bubble
+  addUserBubble(rant);
+
+  // Show first typing indicator while fetching
+  showTyping(personas[0]);
+
+  var results;
+  try {
+    var res = await fetch('/api/verdict', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ freetext: rant, scenario: state.scenario })
+    });
+    results = await res.json();
+    if (results.error) throw new Error(results.error);
+  } catch(err) {
+    hideTyping();
+    var wrap = document.getElementById('chat-messages');
+    wrap.innerHTML += '<div style="text-align:center;padding:20px;font-size:14px;color:var(--red);font-weight:700;">Oops! ' + escHtml(err.message) + '</div>';
+    return;
+  }
+
+  // Reveal personas one by one with delays
+  for (var i = 0; i < personas.length; i++) {
+    (function(persona, delay) {
+      setTimeout(function() {
+        showTyping(persona);
+        setTimeout(function() {
+          hideTyping();
+          addPersonaMessage(persona, results[persona.key] || {});
+
+          // After last persona, show count bar + share
+          if (persona.key === 'sanket') {
+            setTimeout(function() {
+              if (results.count) {
+                var cb = document.getElementById('count-bar');
+                cb.textContent = 'Tu ' + results.count.toLocaleString('en-IN') + ' logon mein se ek hai jinhe aaj sach suna.';
+                cb.classList.add('show');
+                document.getElementById('counter-text').textContent = results.count.toLocaleString('en-IN') + ' verdicts delivered';
+              }
+
+              var shareText = buildShareText(rant, results);
+              document.getElementById('share-text').textContent = shareText;
+              document.getElementById('share-block').classList.add('show');
+              document.getElementById('share-block').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 600);
+          }
+        }, 2000 + Math.random() * 800);
+      }, delay);
+    })(personas[i], i * 3200);
+  }
+}
+
+function copyShare() {
+  var text = document.getElementById('share-text').textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = document.querySelector('.share-copy-btn');
+    btn.textContent = '✓ Copied!';
+    setTimeout(function(){ btn.textContent = 'Copy & Share'; }, 2000);
+  }).catch(function() {
+    alert('Copy this text:\n\n' + text);
   });
 }
 
-function getChecked(name) {
-  return Array.from(document.querySelectorAll("input[name=" + name + "]:checked")).map(function(c) { return c.value; });
-}
-
-function submitQuestions() {
-  state.q1 = getChecked("q1");
-  state.q2 = getChecked("q2");
-  state.q3 = getChecked("q3");
-  if (!state.q1.length || !state.q2.length || !state.q3.length) {
-    document.getElementById("questions-err").classList.add("show"); return;
-  }
-  document.getElementById("questions-err").classList.remove("show");
-  goTo(3);
-}
-
-async function getVerdict() {
-  state.freetext = document.getElementById("user-freetext").value.trim();
-  if (!state.freetext) { document.getElementById("freetext-err").classList.add("show"); return; }
-  document.getElementById("freetext-err").classList.remove("show");
-  goTo(4);
-
-  var pi = personaInfo[state.persona];
-  document.getElementById("v-avatar").textContent = pi.avatar;
-  document.getElementById("v-name").textContent = pi.name;
-  document.getElementById("v-tagline").textContent = pi.tagline;
-
-  var msgs = loadingMessages[state.persona];
-  var mi = 0;
-  var lt = document.getElementById("loading-msg");
-  lt.textContent = msgs[0];
-  var ticker = setInterval(function() { mi = (mi+1) % msgs.length; lt.textContent = msgs[mi]; }, 2200);
-
-  function showErr(msg) {
-    clearInterval(ticker);
-    document.getElementById("verdict-loading").innerHTML =
-      "<p style='color:var(--red);padding:20px;font-size:14px;font-weight:700;text-align:center;'>Oops! " + msg + "</p>" +
-      "<button class='restart-btn' onclick='restart()' style='max-width:240px;margin:0 auto;display:block;'>Start Over</button>";
-  }
-
-  try {
-    var res = await fetch("/api/verdict", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ scenario: state.scenario, persona: state.persona, q1: state.q1, q2: state.q2, q3: state.q3, freetext: state.freetext })
-    });
-    var data = await res.json();
-    clearInterval(ticker);
-    if (data.error) throw new Error(data.error);
-
-    document.getElementById("v-verdict").textContent = data.verdict;
-    document.getElementById("v-reason").textContent = data.reason;
-    document.getElementById("v-next").textContent = data.next_step;
-
-    if (data.count) {
-      document.getElementById("v-count-bar").textContent = "You are one of " + data.count.toLocaleString("en-IN") + " people who got a verdict today.";
-      document.getElementById("counter-text").textContent = data.count.toLocaleString("en-IN") + " verdicts delivered";
-    }
-
-    document.getElementById("verdict-loading").style.display = "none";
-    document.getElementById("verdict-content").style.display = "block";
-
-  } catch(err) {
-    showErr(err.message);
-  }
-}
-
 function restart() {
-  state = { scenario: "", persona: "", q1: [], q2: [], q3: [], freetext: "" };
-  document.querySelectorAll(".checkbox-label").forEach(function(l) { l.classList.remove("checked"); l.querySelector("input").checked = false; });
-  document.querySelectorAll(".persona-card").forEach(function(c) { c.classList.remove("selected"); });
-  document.getElementById("user-freetext").value = "";
-  document.getElementById("verdict-loading").style.display = "block";
-  document.getElementById("verdict-content").style.display = "none";
+  state = { rant: '', scenario: '' };
+  document.getElementById('rant-input').value = '';
+  document.getElementById('char-count').textContent = '0';
+  document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
   goTo(0);
 }
-
-setupCheckboxes();
 </script>
 </body>
 </html>

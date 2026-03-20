@@ -1,7 +1,7 @@
 {
   "name": "chai-tapri",
-  "version": "2.0.0",
-  "description": "Chai Tapri - Career advice from your tapri crew",
+  "version": "3.0.0",
+  "description": "Chai Tapri - Career advice, desi style",
   "main": "server.js",
   "scripts": { "start": "node server.js" },
   "engines": { "node": ">=18" }
