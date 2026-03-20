@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chai Tapri ☕</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --chai: #C17A2A;
+    --chai-light: #F5E6C8;
+    --chai-dark: #7A4A10;
+    --steam: #E8D5B0;
+    --tapri-bg: #FDF6E3;
+    --tapri-card: #FFFDF5;
+    --tapri-border: #D4B896;
+    --ink: #2C1A0E;
+    --ink-muted: #7A5C3E;
+    --red: #C0392B;
+    --green: #1A7A4A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hind', sans-serif;
+    background: var(--tapri-bg);
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(193,122,42,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(193,122,42,0.08) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C17A2A' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  h1, h2, h3 { font-family: 'Baloo 2', cursive; }
+
+  .container {
+    width: 100%;
+    max-width: 560px;
+  }
+
+  .card {
+    background: var(--tapri-card);
+    border: 1.5px solid var(--tapri-border);
+    border-radius: 20px;
+    padding: 36px 32px;
+    box-shadow: 4px 4px 0px var(--tapri-border), 0 8px 32px rgba(193,122,42,0.10);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: repeating-linear-gradient(90deg, var(--chai) 0px, var(--chai) 12px, var(--chai-light) 12px, var(--chai-light) 24px);
+  }
+
+  .tapri-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .tapri-logo {
+    font-size: 42px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .tapri-name {
+    font-family: 'Baloo 2', cursive;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--chai);
+    margin-bottom: 20px;
+  }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .welcome-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.3;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .option-btn {
+    display: block;
+    width: 100%;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    background: var(--tapri-card);
+    border: 1.5px solid var(--tapri-border);
+    border-radius: 14px;
+    font-family: 'Hind', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.18s;
+    box-shadow: 2px 2px 0 var(--tapri-border);
+  }
+
+  .option-btn:hover {
+    background: var(--chai-light);
+    border-color: var(--chai);
+    transform: translateY(-2px);
+    box-shadow: 2px 4px 0 var(--chai);
+  }
+
+  .option-btn:active { transform: translateY(0); box-shadow: 1px 1px 0 var(--chai); }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--ink);
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .persona-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+
+  .persona-card {
+    border: 1.5px solid var(--tapri-border);
+    border-radius: 16px;
+    padding: 16px 10px 14px;
+    text-align: center;
+    cursor: pointer;
+    background: var(--tapri-card);
+    transition: all 0.18s;
+    box-shadow: 2px 2px 0 var(--tapri-border);
+  }
+
+  .persona-card:hover {
+    border-color: var(--chai);
+    background: var(--chai-light);
+    transform: translateY(-2px);
+    box-shadow: 2px 4px 0 var(--chai);
+  }
+
+  .persona-card.selected {
+    border-color: var(--chai);
+    background: var(--chai-light);
+    box-shadow: 2px 4px 0 var(--chai);
+  }
+
+  .persona-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    overflow: hidden;
+    border: 2px solid var(--tapri-border);
+    background: var(--steam);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+  }
+
+  .persona-name {
+    font-family: 'Baloo 2', cursive;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .persona-tag {
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 3px;
+    font-style: italic;
+  }
+
+  .question-block {
+    margin-bottom: 22px;
+  }
+
+  .question-label {
+    font-family: 'Baloo 2', cursive;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .question-label .q-num {
+    background: var(--chai);
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--tapri-border);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--tapri-card);
+    transition: all 0.15s;
+  }
+
+  .checkbox-label:hover { background: var(--chai-light); border-color: var(--chai); }
+  .checkbox-label input { accent-color: var(--chai); width: 16px; height: 16px; }
+  .checkbox-label.checked { background: var(--chai-light); border-color: var(--chai); font-weight: 500; }
+
+  .free-text-q {
+    font-family: 'Baloo 2', cursive;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid var(--tapri-border);
+    border-radius: 12px;
+    font-family: 'Hind', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--tapri-card);
+    resize: vertical;
+    min-height: 110px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  textarea:focus { border-color: var(--chai); }
+
+  .primary-btn {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    margin-top: 20px;
+    background: var(--chai);
+    border: none;
+    border-radius: 14px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+    cursor: pointer;
+    box-shadow: 2px 3px 0 var(--chai-dark);
+    transition: all 0.15s;
+    letter-spacing: 0.5px;
+  }
+
+  .primary-btn:hover { background: var(--chai-dark); transform: translateY(-1px); box-shadow: 2px 4px 0 var(--chai-dark); }
+  .primary-btn:active { transform: translateY(1px); box-shadow: 1px 1px 0 var(--chai-dark); }
+  .primary-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .verdict-card {
+    border: 2px solid var(--chai);
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .verdict-header {
+    background: var(--chai);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .verdict-persona-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    border: 2px solid rgba(255,255,255,0.5);
+  }
+
+  .verdict-persona-info h3 {
+    font-size: 15px;
+    font-weight: 800;
+    color: white;
+  }
+
+  .verdict-persona-info p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .verdict-body { padding: 20px; background: var(--tapri-card); }
+
+  .verdict-section {
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px dashed var(--tapri-border);
+  }
+
+  .verdict-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .verdict-section-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--chai);
+    margin-bottom: 8px;
+  }
+
+  .verdict-text {
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  .verdict-main-text {
+    font-size: 22px;
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  .loading-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 20px;
+    color: var(--ink-muted);
+    font-style: italic;
+    font-size: 14px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .dots { display: flex; gap: 6px; }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--chai);
+    animation: bounce 1.2s infinite;
+  }
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); opacity: 0.5; }
+    50% { transform: translateY(-8px); opacity: 1; }
+  }
+
+  .restart-btn {
+    display: block;
+    width: 100%;
+    padding: 13px 20px;
+    background: transparent;
+    border: 1.5px solid var(--tapri-border);
+    border-radius: 14px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 12px;
+  }
+
+  .restart-btn:hover { border-color: var(--chai); color: var(--ink); background: var(--chai-light); }
+
+  .stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .step-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--tapri-border);
+    transition: all 0.3s;
+  }
+
+  .step-dot.active { background: var(--chai); transform: scale(1.4); }
+  .step-dot.done { background: var(--chai); opacity: 0.5; }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: var(--ink-muted);
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: color 0.15s;
+    border: none;
+    background: none;
+    font-family: 'Hind', sans-serif;
+  }
+
+  .back-link:hover { color: var(--chai); }
+
+  .error-msg {
+    font-size: 13px;
+    color: var(--red);
+    margin-top: 8px;
+    display: none;
+  }
+
+  .error-msg.show { display: block; }
+
+  @media (max-width: 480px) {
+    .card { padding: 28px 20px; }
+    .persona-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .persona-avatar { width: 56px; height: 56px; font-size: 28px; }
+    .persona-name { font-size: 11px; }
+    .welcome-title { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <div class="tapri-header">
+      <div class="tapri-logo">☕</div>
+      <div class="tapri-name">Chai Tapri</div>
+    </div>
+
+    <!-- STEPPER -->
+    <div class="stepper" id="stepper">
+      <div class="step-dot active" id="step-0"></div>
+      <div class="step-dot" id="step-1"></div>
+      <div class="step-dot" id="step-2"></div>
+      <div class="step-dot" id="step-3"></div>
+      <div class="step-dot" id="step-4"></div>
+    </div>
+
+    <!-- SCREEN 0: Welcome -->
+    <div class="screen active" id="screen-0">
+      <div class="welcome-title">Welcome to Chai Break ☕<br>Let's figure out your next career move.</div>
+      <button class="option-btn" onclick="selectQuery('quit')">👉 Should I quit my job?</button>
+      <button class="option-btn" onclick="selectQuery('confused')">👉 I'm confused about my career</button>
+    </div>
+
+    <!-- SCREEN 1: Persona Selection -->
+    <div class="screen" id="screen-1">
+      <button class="back-link" onclick="goTo(0)">← Back</button>
+      <div class="section-title">Who do you want advice from?</div>
+      <div class="persona-grid">
+        <div class="persona-card" id="persona-bhuvan" onclick="selectPersona('bhuvan')">
+          <div class="persona-avatar">🧔🏽</div>
+          <div class="persona-name">Brutal Bhuvan</div>
+          <div class="persona-tag">No filter, no sugarcoating</div>
+        </div>
+        <div class="persona-card" id="persona-chitra" onclick="selectPersona('chitra')">
+          <div class="persona-avatar">👩🏽‍💼</div>
+          <div class="persona-name">Chill Chitra</div>
+          <div class="persona-tag">Calm, clear, forward</div>
+        </div>
+        <div class="persona-card" id="persona-sanket" onclick="selectPersona('sanket')">
+          <div class="persona-avatar">👨🏿‍💼</div>
+          <div class="persona-name">Sensible Sanket</div>
+          <div class="persona-tag">10 years in, knows it all</div>
+        </div>
+      </div>
+      <p class="error-msg" id="persona-error">Please select a persona before continuing.</p>
+      <button class="primary-btn" onclick="confirmPersona()">Continue ☕</button>
+    </div>
+
+    <!-- SCREEN 2: Questions -->
+    <div class="screen" id="screen-2">
+      <button class="back-link" onclick="goTo(1)">← Back</button>
+      <div class="section-title">Tell us a bit more...</div>
+
+      <div class="question-block">
+        <div class="question-label"><span class="q-num">1</span> How long have you been in your current job?</div>
+        <div class="checkbox-group" id="q1-group">
+          <label class="checkbox-label"><input type="checkbox" name="q1" value="Less than 6 months"> Less than 6 months</label>
+          <label class="checkbox-label"><input type="checkbox" name="q1" value="6 months – 1 year"> 6 months – 1 year</label>
+          <label class="checkbox-label"><input type="checkbox" name="q1" value="1–3 years"> 1–3 years</label>
+          <label class="checkbox-label"><input type="checkbox" name="q1" value="3–5 years"> 3–5 years</label>
+          <label class="checkbox-label"><input type="checkbox" name="q1" value="5+ years"> 5+ years</label>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label"><span class="q-num">2</span> What's frustrating you the most?</div>
+        <div class="checkbox-group" id="q2-group">
+          <label class="checkbox-label"><input type="checkbox" name="q2" value="My manager / toxic workplace"> My manager / toxic workplace</label>
+          <label class="checkbox-label"><input type="checkbox" name="q2" value="No growth or learning"> No growth or learning</label>
+          <label class="checkbox-label"><input type="checkbox" name="q2" value="Low salary"> Low salary</label>
+          <label class="checkbox-label"><input type="checkbox" name="q2" value="Work-life balance is gone"> Work-life balance is gone</label>
+          <label class="checkbox-label"><input type="checkbox" name="q2" value="Feeling stuck and bored"> Feeling stuck and bored</label>
+          <label class="checkbox-label"><input type="checkbox" name="q2" value="Nothing, I'm just restless"> Nothing, I'm just restless</label>
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-label"><span class="q-num">3</span> Have you tried switching already?</div>
+        <div class="checkbox-group" id="q3-group">
+          <label class="checkbox-label"><input type="checkbox" name="q3" value="Yes, actively applying"> Yes, actively applying</label>
+          <label class="checkbox-label"><input type="checkbox" name="q3" value="Spoke to recruiters but nothing clicked"> Spoke to recruiters but nothing clicked</label>
+          <label class="checkbox-label"><input type="checkbox" name="q3" value="Thought about it but haven't acted"> Thought about it but haven't acted</label>
+          <label class="checkbox-label"><input type="checkbox" name="q3" value="No, too scared / comfortable"> No, too scared / comfortable</label>
+        </div>
+      </div>
+
+      <p class="error-msg" id="questions-error">Please answer all 3 questions before continuing.</p>
+      <button class="primary-btn" onclick="submitQuestions()">Next →</button>
+    </div>
+
+    <!-- SCREEN 3: Free Text -->
+    <div class="screen" id="screen-3">
+      <button class="back-link" onclick="goTo(2)">← Back</button>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:var(--chai-light);border:1px solid var(--tapri-border);border-radius:20px;padding:5px 14px;font-size:13px;font-weight:600;color:var(--chai-dark);margin-bottom:16px;" id="screen3-persona-badge"></div>
+      <div class="free-text-q">Should I quit my job?</div>
+      <p style="font-size:14px; color: var(--ink-muted); margin-bottom: 14px;">Tell us anything — what's going on, what you're feeling, what you're afraid of. <span id="persona-speaking-note"></span></p>
+      <textarea id="user-freetext" placeholder="Type here... this is your tapri, be honest ☕"></textarea>
+      <p class="error-msg" id="freetext-error">Please write something before we can give you advice.</p>
+      <button class="primary-btn" onclick="getVerdict()">Get My Verdict ☕</button>
+    </div>
+
+    <!-- SCREEN 4: Verdict -->
+    <div class="screen" id="screen-4">
+      <div id="verdict-loading" class="loading-dots">
+        <div class="dots">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+        <span id="loading-text">Brewing your advice...</span>
+      </div>
+      <div id="verdict-content" style="display:none;">
+        <div class="verdict-card">
+          <div class="verdict-header">
+            <div class="verdict-persona-avatar" id="v-avatar"></div>
+            <div class="verdict-persona-info">
+              <h3 id="v-name"></h3>
+              <p id="v-tagline"></p>
+            </div>
+          </div>
+          <div class="verdict-body">
+            <div class="verdict-section">
+              <div class="verdict-section-title">⚡ Verdict</div>
+              <div class="verdict-main-text" id="v-verdict"></div>
+            </div>
+            <div class="verdict-section">
+              <div class="verdict-section-title">🧠 Reason</div>
+              <div class="verdict-text" id="v-reason"></div>
+            </div>
+            <div class="verdict-section">
+              <div class="verdict-section-title">👣 Next Step</div>
+              <div class="verdict-text" id="v-next"></div>
+            </div>
+          </div>
+        </div>
+        <button class="restart-btn" onclick="restart()">☕ Start Over</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+var state = { query: "", persona: "", q1: [], q2: [], q3: [], freetext: "" };
+
+var personaInfo = {
+  bhuvan: { name: "Brutal Bhuvan", avatar: "\u{1F9D4}\u{1F3FD}", tagline: "Giving it to you straight, bhai" },
+  chitra: { name: "Chill Chitra", avatar: "\u{1F469}\u{1F3FD}\u200D\u{1F4BC}", tagline: "Calm, clear, and forward-looking" },
+  sanket: { name: "Sensible Sanket", avatar: "\u{1F468}\u{1F3FF}\u200D\u{1F4BC}", tagline: "10 years in, seen it all" }
+};
+
+var loadingMessages = {
+  bhuvan: ["Bhuvan is sipping chai and judging you...", "Calling it as it is, bhai...", "Almost done... sach bolega..."],
+  chitra: ["Chitra is thinking this through calmly...", "Mapping a path forward for you...", "Almost ready with her clarity..."],
+  sanket: ["Sanket is drawing on 10 years of wisdom...", "Consulting his mental org chart...", "Senior-level advice incoming..."]
+};
+
+var personaPrompts = {
+  bhuvan: "You are Brutal Bhuvan - a late-20s wheatish Indian man, disheveled hair, business casual. Brutally honest, no-nonsense, speaks Hinglish. Never sugarcoats. Use words like bhai, yaar, chhod do yaar, seedha baat karo naturally. Short punchy sentences. Max 2-3 sentences per section.",
+  chitra: "You are Chill Chitra - early-20s Indian woman, level-headed, calm, formal English. Always shows a path FORWARD. Reassuring but practical. Never dwells on the problem. Max 2-3 sentences per section.",
+  sanket: "You are Sensible Senior Sanket - mid-30s Indian man, 10 years in the organisation. Wise, warm, grounded mentor. Mix of formal and conversational English. Max 2-3 sentences per section."
+};
+
+function goTo(screen) {
+  document.querySelectorAll(".screen").forEach(function(s) { s.classList.remove("active"); });
+  document.getElementById("screen-" + screen).classList.add("active");
+  document.querySelectorAll(".step-dot").forEach(function(d, i) {
+    d.classList.remove("active", "done");
+    if (i < screen) d.classList.add("done");
+    else if (i === screen) d.classList.add("active");
+  });
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function selectQuery(type) {
+  state.query = type === "quit" ? "Should I quit my job?" : "I am confused about my career";
+  goTo(1);
+}
+
+function selectPersona(p) {
+  state.persona = p;
+  document.querySelectorAll(".persona-card").forEach(function(c) { c.classList.remove("selected"); });
+  document.getElementById("persona-" + p).classList.add("selected");
+  document.getElementById("persona-error").classList.remove("show");
+  setTimeout(function() {
+    var pi = personaInfo[state.persona];
+    document.getElementById("persona-speaking-note").textContent = pi.name + " is listening.";
+    var badge = document.getElementById("screen3-persona-badge");
+    if (badge) badge.textContent = pi.name;
+    goTo(2);
+    setupCheckboxListeners();
+  }, 220);
+}
+
+function confirmPersona() {
+  if (!state.persona) { document.getElementById("persona-error").classList.add("show"); return; }
+  var pi = personaInfo[state.persona];
+  document.getElementById("persona-speaking-note").textContent = pi.name + " is listening.";
+  var badge = document.getElementById("screen3-persona-badge");
+  if (badge) badge.textContent = pi.name;
+  goTo(2);
+  setupCheckboxListeners();
+}
+
+function setupCheckboxListeners() {
+  document.querySelectorAll(".checkbox-label input").forEach(function(cb) {
+    cb.addEventListener("change", function() {
+      this.closest(".checkbox-label").classList.toggle("checked", this.checked);
+    });
+  });
+}
+
+function getChecked(name) {
+  return Array.from(document.querySelectorAll("input[name=" + name + "]:checked")).map(function(c) { return c.value; });
+}
+
+function submitQuestions() {
+  state.q1 = getChecked("q1");
+  state.q2 = getChecked("q2");
+  state.q3 = getChecked("q3");
+  if (!state.q1.length || !state.q2.length || !state.q3.length) {
+    document.getElementById("questions-error").classList.add("show"); return;
+  }
+  document.getElementById("questions-error").classList.remove("show");
+  goTo(3);
+}
+
+async function getVerdict() {
+  state.freetext = document.getElementById("user-freetext").value.trim();
+  if (!state.freetext) { document.getElementById("freetext-error").classList.add("show"); return; }
+  document.getElementById("freetext-error").classList.remove("show");
+
+  goTo(4);
+
+  var p = personaInfo[state.persona];
+  document.getElementById("v-avatar").textContent = p.avatar;
+  document.getElementById("v-name").textContent = p.name;
+  document.getElementById("v-tagline").textContent = p.tagline;
+
+  var msgs = loadingMessages[state.persona];
+  var mi = 0;
+  var lt = document.getElementById("loading-text");
+  lt.textContent = msgs[0];
+  var msgInterval = setInterval(function() { mi = (mi + 1) % msgs.length; lt.textContent = msgs[mi]; }, 2200);
+
+  function showError(msg) {
+    clearInterval(msgInterval);
+    document.getElementById("verdict-loading").innerHTML =
+      "<p style=\"color:var(--red);text-align:center;padding:20px;font-size:14px;\">Oops! " + msg + "</p>" +
+      "<button class=\"restart-btn\" onclick=\"restart()\" style=\"margin:12px auto;display:block;max-width:200px;\">Start Over</button>";
+  }
+
+  try {
+    var response = await fetch("/api/verdict", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        persona: state.persona,
+        query: state.query,
+        q1: state.q1,
+        q2: state.q2,
+        q3: state.q3,
+        freetext: state.freetext
+      })
+    });
+
+    var data = await response.json();
+    clearInterval(msgInterval);
+
+    if (data.error) throw new Error(data.error);
+
+    document.getElementById("v-verdict").textContent = data.verdict;
+    document.getElementById("v-reason").textContent = data.reason;
+    document.getElementById("v-next").textContent = data.next_step;
+    document.getElementById("verdict-loading").style.display = "none";
+    document.getElementById("verdict-content").style.display = "block";
+
+  } catch(err) {
+    showError(err.message);
+  }
+}
+
+function restart() {
+  state.query = ""; state.persona = ""; state.q1 = []; state.q2 = []; state.q3 = []; state.freetext = "";
+  document.querySelectorAll(".checkbox-label").forEach(function(l) { l.classList.remove("checked"); l.querySelector("input").checked = false; });
+  document.querySelectorAll(".persona-card").forEach(function(c) { c.classList.remove("selected"); });
+  document.getElementById("user-freetext").value = "";
+  document.getElementById("verdict-loading").style.display = "flex";
+  document.getElementById("verdict-content").style.display = "none";
+  goTo(0);
+}
+
+setupCheckboxListeners();
+</script>
+</body>
+</html>
