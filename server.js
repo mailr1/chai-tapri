@@ -78,17 +78,13 @@ Must feel like lived wisdom. No generic advice like "network more" or "update yo
 function callClaude(persona, rant) {
   return new Promise(function(resolve, reject) {
     var prompt = personaPrompts[persona] + '\n\nThe person\'s situation in their own words:\n"' + rant + '"\n\nRespond now in character. JSON only.';
-
     var postData = JSON.stringify({
       model: 'claude-haiku-4-5',
       max_tokens: 700,
       messages: [{ role: 'user', content: prompt }]
     });
-
     var options = {
-      hostname: 'api.anthropic.com',
-      path: '/v1/messages',
-      method: 'POST',
+      hostname: 'api.anthropic.com', path: '/v1/messages', method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': ANTHROPIC_API_KEY,
@@ -96,7 +92,6 @@ function callClaude(persona, rant) {
         'Content-Length': Buffer.byteLength(postData)
       }
     };
-
     var req = https.request(options, function(apiRes) {
       var body = '';
       apiRes.on('data', function(c) { body += c; });
@@ -107,28 +102,35 @@ function callClaude(persona, rant) {
           var raw = data.content.map(function(i) { return i.text || ''; }).join('').trim();
           var clean = raw.replace(/^```json|^```|```$/gm, '').trim();
           resolve(JSON.parse(clean));
-        } catch(e) {
-          reject(new Error('Parse error for ' + persona + ': ' + e.message));
-        }
+        } catch(e) { reject(new Error('Parse error for ' + persona + ': ' + e.message)); }
       });
     });
-
     req.on('error', reject);
     req.write(postData);
     req.end();
   });
 }
 
+const mimeTypes = {
+  '.html': 'text/html; charset=utf-8',
+  '.png':  'image/png',
+  '.jpg':  'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.css':  'text/css',
+  '.js':   'application/javascript'
+};
+
 const server = http.createServer(function(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
   if (req.method === 'OPTIONS') { res.writeHead(204); res.end(); return; }
 
   var parsedUrl = url.parse(req.url);
+  var pathname = parsedUrl.pathname;
 
-  if (req.method === 'GET' && (parsedUrl.pathname === '/' || parsedUrl.pathname === '/index.html')) {
+  // Serve index.html
+  if (req.method === 'GET' && (pathname === '/' || pathname === '/index.html')) {
     fs.readFile(path.join(__dirname, 'index.html'), function(err, data) {
       if (err) { res.writeHead(500); res.end('Error'); return; }
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
@@ -137,19 +139,34 @@ const server = http.createServer(function(req, res) {
     return;
   }
 
-  if (req.method === 'GET' && parsedUrl.pathname === '/api/count') {
+  // Serve static files (bg.png etc)
+  if (req.method === 'GET') {
+    var filePath = path.join(__dirname, pathname);
+    var ext = path.extname(pathname).toLowerCase();
+    if (mimeTypes[ext]) {
+      fs.readFile(filePath, function(err, data) {
+        if (err) { res.writeHead(404); res.end('Not found'); return; }
+        res.writeHead(200, { 'Content-Type': mimeTypes[ext] });
+        res.end(data);
+      });
+      return;
+    }
+  }
+
+  // API count
+  if (req.method === 'GET' && pathname === '/api/count') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ count: getCount() }));
     return;
   }
 
-  if (req.method === 'POST' && parsedUrl.pathname === '/api/verdict') {
+  // API verdict
+  if (req.method === 'POST' && pathname === '/api/verdict') {
     if (!ANTHROPIC_API_KEY) {
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'ANTHROPIC_API_KEY not configured' }));
       return;
     }
-
     var body = '';
     req.on('data', function(chunk) { body += chunk; });
     req.on('end', function() {
@@ -159,14 +176,12 @@ const server = http.createServer(function(req, res) {
         res.end(JSON.stringify({ error: 'Invalid JSON' }));
         return;
       }
-
       var rant = parsed.freetext || '';
       if (!rant.trim()) {
         res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: 'Nothing to respond to!' }));
         return;
       }
-
       Promise.all([
         callClaude('bhuvan', rant),
         callClaude('chitra', rant),
@@ -174,12 +189,7 @@ const server = http.createServer(function(req, res) {
       ]).then(function(results) {
         var count = incrementCount();
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({
-          bhuvan: results[0],
-          chitra: results[1],
-          sanket: results[2],
-          count: count
-        }));
+        res.end(JSON.stringify({ bhuvan: results[0], chitra: results[1], sanket: results[2], count: count }));
       }).catch(function(err) {
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: err.message }));
@@ -192,5 +202,5 @@ const server = http.createServer(function(req, res) {
 });
 
 server.listen(PORT, function() {
-  console.log('Chai Tapri v4 running on port ' + PORT);
+  console.log('Chai Tapri v6 running on port ' + PORT);
 });
