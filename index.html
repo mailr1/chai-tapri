@@ -50,22 +50,19 @@ header, .scene-wrap, .rant-wrap, .verdict-wrap { position: relative; z-index: 2;
 
 /* SCENE */
 .scene-wrap { width: 100%; max-width: 640px; margin-bottom: 10px; }
-.bunting { height: 6px; background: repeating-linear-gradient(90deg, #FF9933 0,#FF9933 22px, #fff 22px,#fff 44px, #138808 44px,#138808 66px, #fff 66px,#fff 88px); border-radius: 4px 4px 0 0; opacity: 0.65; }
-.characters { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; padding: 18px 16px 12px; background: rgba(10,3,0,0.55); backdrop-filter: blur(6px); }
+.characters { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; padding: 18px 12px 14px; background: transparent; }
 .char-card { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s; position: relative; }
 .char-card:hover { transform: translateY(-3px); }
 .char-card:hover .char-bubble { opacity: 1; transform: translateY(0); }
 .char-bubble { position: absolute; top: -38px; background: rgba(255,248,238,0.96); border: 2px solid var(--ink); border-radius: 8px; padding: 5px 10px; font-size: 11px; font-weight: 800; color: var(--ink); white-space: nowrap; opacity: 0; transform: translateY(5px); transition: all 0.2s; pointer-events: none; z-index: 10; box-shadow: 2px 2px 0 var(--ink); }
 .char-bubble::after { content: ''; position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%); border: 4px solid transparent; border-top-color: var(--ink); }
-.char-avatar-wrap { width: 68px; height: 68px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 38px; border: 2.5px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05); transition: all 0.22s; position: relative; }
-.char-card:hover .char-avatar-wrap, .char-card.selected .char-avatar-wrap { border-color: var(--saffron); background: rgba(249,115,22,0.12); box-shadow: 0 0 20px rgba(249,115,22,0.28); }
+.char-avatar-wrap { width: 82px; height: 82px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 46px; border: none; background: transparent; transition: all 0.22s; position: relative; }
+.char-card:hover .char-avatar-wrap, .char-card.selected .char-avatar-wrap { box-shadow: 0 0 28px rgba(249,115,22,0.55); filter: drop-shadow(0 0 10px rgba(249,115,22,0.6)); }
 .char-card.selected .char-avatar-wrap { transform: scale(1.1); }
-.char-card.selected .char-avatar-wrap::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 2px solid rgba(249,115,22,0.5); animation: ringPulse 1.5s ease-in-out infinite; }
 @keyframes ringPulse { 0%,100%{transform:scale(1);opacity:0.8;} 50%{transform:scale(1.12);opacity:0.2;} }
 .char-name { font-family: 'Baloo 2', cursive; font-size: 12px; font-weight: 800; color: rgba(255,237,213,0.75); text-align: center; margin-top: 7px; line-height: 1.2; transition: color 0.2s; }
 .char-card:hover .char-name, .char-card.selected .char-name { color: #FBBF24; }
 .char-vibe { font-size: 10px; color: rgba(255,237,213,0.26); text-align: center; margin-top: 2px; font-style: italic; }
-.stall-bar { height: 8px; background: linear-gradient(180deg, rgba(90,40,5,0.95), rgba(60,25,0,0.98)); border-top: 1px solid rgba(249,115,22,0.14); }
 
 /* RANT — raw, no card */
 .rant-wrap { width: 100%; max-width: 640px; padding: 20px 6px 0; }
@@ -180,7 +177,6 @@ textarea::placeholder { color: rgba(255,237,213,0.20); font-weight: 400; font-st
 
 <!-- SCENE -->
 <div class="scene-wrap" id="scene-wrap">
-  <div class="bunting"></div>
   <div class="characters">
     <div class="char-card" id="char-bhuvan" onclick="selectChar('bhuvan')">
       <div class="char-bubble">Kya scene hai?</div>
@@ -196,17 +192,22 @@ textarea::placeholder { color: rgba(255,237,213,0.20); font-weight: 400; font-st
     </div>
     <div class="char-card" id="char-sanket" onclick="selectChar('sanket')">
       <div class="char-bubble">I've seen this before.</div>
-      <div class="char-avatar-wrap">👨🏿‍💼</div>
+      <div class="char-avatar-wrap">👨🏽‍💼</div>
       <div class="char-name">Sensible Sanket</div>
       <div class="char-vibe">10 years in, seen it all</div>
     </div>
+    <div class="char-card" id="char-all" onclick="selectChar('all')">
+      <div class="char-bubble">We're all ears.</div>
+      <div class="char-avatar-wrap">🗣️</div>
+      <div class="char-name">Hear from all</div>
+      <div class="char-vibe">All three weigh in</div>
+    </div>
   </div>
-  <div class="stall-bar"></div>
-</div>
+  </div>
 
 <!-- RAW RANT INPUT -->
 <div class="rant-wrap" id="rant-wrap">
-  <div class="rant-instruction" id="rant-instruction">↑ Pick who you want to hear from first</div>
+  <div class="rant-instruction" id="rant-instruction">↑ Who do you want to talk to?</div>
   <div class="scenario-pills">
     <div class="pill" onclick="setPill(this,'quit')">🚪 Should I quit?</div>
     <div class="pill" onclick="setPill(this,'underpaid')">💸 Am I underpaid?</div>
@@ -220,7 +221,7 @@ textarea::placeholder { color: rgba(255,237,213,0.20); font-weight: 400; font-st
     <span>🔥</span>
     <span><strong>Right now:</strong> someone's deciding whether to quit, someone got a low appraisal, someone's thinking of going solo.</span>
   </div>
-  <button class="cta-btn" onclick="startChat()">Sach sunna hai? ☕</button>
+  <button class="cta-btn" onclick="startChat()">Are you ready for the truth? ☕</button>
 </div>
 
 <!-- COMIC VERDICT -->
@@ -257,7 +258,7 @@ textarea::placeholder { color: rgba(255,237,213,0.20); font-weight: 400; font-st
   </div>
 
   <div class="comic-panel flip" id="panel-sanket">
-    <div class="comic-avatar">👨🏿‍💼</div>
+    <div class="comic-avatar">👨🏽‍💼</div>
     <div class="bubble-sanket">
       <div class="bubble-name">Sensible Sanket</div>
       <div id="sanket-content"></div>
@@ -294,7 +295,7 @@ var defs = {
     ]
   },
   sanket: {
-    name: 'Sensible Sanket', avatar: '👨🏿‍💼', typingLine: 'Sanket is thinking...',
+    name: 'Sensible Sanket', avatar: '👨🏽‍💼', typingLine: 'Sanket is thinking...',
     sections: [
       { key: 'this_pattern_is',  label: 'The pattern here' },
       { key: 'where_this_leads', label: 'Where this leads' },
@@ -306,7 +307,8 @@ var defs = {
 var charQuotes = {
   bhuvan: 'Kya scene hai? Bol.',
   chitra: "Tell me what's going on.",
-  sanket: "I've seen this before. Talk to me."
+  sanket: "I've seen this before. Talk to me.",
+  all: "Let's all hear this."
 };
 
 var placeholders = {
@@ -333,7 +335,7 @@ function selectChar(key) {
   document.querySelectorAll('.char-card').forEach(function(c){ c.classList.remove('selected'); });
   document.getElementById('char-' + key).classList.add('selected');
   var el = document.getElementById('rant-instruction');
-  el.textContent = charQuotes[key];
+  el.textContent = key === 'all' ? "All three are listening — bol daal." : charQuotes[key];
   el.classList.add('lit');
   document.getElementById('rant-input').focus();
 }
@@ -394,14 +396,8 @@ function buildShare(rant, results) {
 }
 
 function getOrder() {
-  if (!state.selectedChar) return order.slice();
-  var o = order.slice();
-  o.sort(function(a, b) {
-    if (a === state.selectedChar) return -1;
-    if (b === state.selectedChar) return 1;
-    return 0;
-  });
-  return o;
+  if (!state.selectedChar || state.selectedChar === 'all') return order.slice();
+  return [state.selectedChar];
 }
 
 async function startChat() {
@@ -415,14 +411,17 @@ async function startChat() {
   var vw = document.getElementById('verdict-wrap');
   vw.classList.add('active');
 
+  var ord = getOrder();
   ['bhuvan','chitra','sanket'].forEach(function(k) {
-    document.getElementById('panel-' + k).classList.remove('visible');
+    var panel = document.getElementById('panel-' + k);
+    panel.classList.remove('visible');
     document.getElementById(k + '-content').innerHTML = '';
+    // Hide panels not in this round's order
+    panel.style.display = (ord.indexOf(k) !== -1) ? '' : 'none';
   });
   document.getElementById('count-bar').classList.remove('show');
   document.getElementById('share-btn-wrap').classList.remove('show');
 
-  var ord = getOrder();
   showTyping(ord[0]);
 
   var results;
@@ -430,7 +429,7 @@ async function startChat() {
     var res = await fetch('/api/verdict', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ freetext: rant, scenario: state.scenario })
+      body: JSON.stringify({ freetext: rant, scenario: state.scenario, personas: getOrder() })
     });
     results = await res.json();
     if (results.error) throw new Error(results.error);
@@ -485,7 +484,7 @@ function restart() {
   document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
   document.querySelectorAll('.char-card').forEach(function(c){ c.classList.remove('selected'); });
   var instr = document.getElementById('rant-instruction');
-  instr.textContent = '↑ Pick who you want to hear from first';
+  instr.textContent = '↑ Who do you want to talk to?';
   instr.classList.remove('lit');
   document.getElementById('scene-wrap').style.display = '';
   document.getElementById('rant-wrap').style.display = '';

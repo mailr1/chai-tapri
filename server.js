@@ -182,14 +182,18 @@ const server = http.createServer(function(req, res) {
         res.end(JSON.stringify({ error: 'Nothing to respond to!' }));
         return;
       }
-      Promise.all([
-        callClaude('bhuvan', rant),
-        callClaude('chitra', rant),
-        callClaude('sanket', rant)
-      ]).then(function(results) {
+      var requestedPersonas = (parsed.personas && parsed.personas.length) ? parsed.personas : ['bhuvan','chitra','sanket'];
+      var validPersonas = ['bhuvan','chitra','sanket'];
+      requestedPersonas = requestedPersonas.filter(function(p){ return validPersonas.indexOf(p) !== -1; });
+      if (!requestedPersonas.length) requestedPersonas = ['bhuvan','chitra','sanket'];
+
+      Promise.all(requestedPersonas.map(function(p){ return callClaude(p, rant); }))
+      .then(function(results) {
         var count = incrementCount();
+        var out = { count: count };
+        requestedPersonas.forEach(function(p, i){ out[p] = results[i]; });
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ bhuvan: results[0], chitra: results[1], sanket: results[2], count: count }));
+        res.end(JSON.stringify(out));
       }).catch(function(err) {
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: err.message }));
